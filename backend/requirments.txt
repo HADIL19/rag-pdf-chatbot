@@ -1,1 +1,25 @@
- fastapi uvicorn pypdf langchain faiss-cpu sentence-transformers python-multipart
+# FastAPI et serveur
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+python-multipart==0.0.12
+
+# Traitement PDF
+pypdf2==3.0.1
+
+# Embeddings et ML
+sentence-transformers==3.3.1
+faiss-cpu==1.9.0
+numpy==1.26.4
+
+# Intelligence Artificielle (choisir une option)
+# Option 1: OpenAI
+openai==1.57.2
+
+# Option 2: Anthropic Claude
+anthropic==0.42.0
+
+# Variables d'environnement
+python-dotenv==1.0.1
+
+# CORS et autres
+pydantic==2.10.3

@@ -1,213 +1,251 @@
-```md
-# 📄 RAG PDF Chatbot (Next.js + FastAPI)
+# 🤖 RAG Chatbot - Assistant Documentaire Intelligent
 
-A **Retrieval-Augmented Generation (RAG) chatbot** that answers user questions based **only on the content of PDF documents**.
+Un chatbot basé sur **RAG (Retrieval-Augmented Generation)** qui répond aux questions en se basant sur vos documents PDF. Construit avec FastAPI, React, et intégration OpenAI/Claude.
 
-This project demonstrates how real-world AI assistants work in companies (document bots, support bots, internal tools).
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![React](https://img.shields.io/badge/React-18+-61DAFB)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688)
+![License](https://img.shields.io/badge/License-MIT-green)
 
----
+## 🎯 Fonctionnalités
 
-## 🚀 Features
-
-- Ask questions in natural language
-- Search inside PDF documents
-- Retrieve the most relevant text passages
-- Generate accurate answers based on documents
-- Modern chat interface (Next.js)
-- Fast and scalable backend (FastAPI + FAISS)
-
----
-
-## 🧠 How It Works (RAG Pipeline)
-
-1. PDF documents are loaded and converted to text
-2. Text is split into chunks with overlap
-3. Each chunk is transformed into embeddings
-4. Embeddings are stored in a FAISS vector database
-5. User question is embedded
-6. FAISS retrieves the most relevant chunks
-7. A language model generates the final answer using retrieved context
-
----
+- ✅ **Upload de PDFs** avec drag & drop
+- ✅ **Extraction intelligente** du contenu des documents
+- ✅ **Recherche vectorielle** ultra-rapide avec FAISS
+- ✅ **Réponses générées par IA** (OpenAI GPT-4 ou Claude Sonnet)
+- ✅ **Interface moderne** et responsive
+- ✅ **Citations des sources** pour chaque réponse
+- ✅ **Support multi-documents**
 
 ## 🏗️ Architecture
 
 ```
-
-Frontend (Next.js)
-|
-|  HTTP (REST)
-v
-Backend (FastAPI)
-|
-|-- PDF Parsing (PyPDF)
-|-- Text Chunking
-|-- Embeddings (Sentence Transformers)
-|-- FAISS Vector Search
-|-- RAG Answer Generation
-
+┌─────────────┐       ┌──────────────┐       ┌─────────────┐
+│   Frontend  │ ────> │   Backend    │ ────> │  Vector DB  │
+│   (React)   │ <──── │  (FastAPI)   │ <──── │   (FAISS)   │
+└─────────────┘       └──────────────┘       └─────────────┘
+                              │
+                              ▼
+                      ┌──────────────┐
+                      │  OpenAI/     │
+                      │  Claude API  │
+                      └──────────────┘
 ```
 
----
+### Stack Technique
 
-## 🛠 Tech Stack
+**Backend:**
+- FastAPI (API REST)
+- PyPDF2 (extraction de texte)
+- Sentence-Transformers (embeddings)
+- FAISS (recherche vectorielle)
+- OpenAI API ou Anthropic Claude
 
-### Backend
-- Python
-- FastAPI
-- PyPDF
-- LangChain
-- Sentence-Transformers
-- FAISS (Vector Database)
+**Frontend:**
+- React 18
+- Axios (requêtes HTTP)
+- CSS moderne avec animations
 
-### Frontend
-- Next.js (App Router)
-- React
-- Tailwind CSS
+## 🚀 Installation
 
----
+### Prérequis
 
-## 📂 Project Structure
+- Python 3.10+
+- Node.js 18+
+- npm ou yarn
+- Clé API OpenAI **OU** Anthropic (voir ci-dessous)
 
-```
-
-rag-pdf-chatbot/
-├── backend/
-│   ├── main.py
-│   ├── ingest.py
-│   ├── rag.py
-│   └── pdfs/
-│
-├── frontend/
-│   ├── src/app/page.tsx
-│   └── ...
-│
-└── README.md
-
-````
-
----
-
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone the repository
+### 1️⃣ Backend
 
 ```bash
-git clone https://github.com/your-username/rag-pdf-chatbot.git
-cd rag-pdf-chatbot
-````
+# Cloner le repo
+git clone https://github.com/votre-username/rag-chatbot.git
+cd rag-chatbot
 
----
-
-### 2️⃣ Backend Setup
-
-```bash
+# Créer environnement virtuel
 cd backend
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Activer l'environnement
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
+
+# Installer les dépendances
 pip install -r requirements.txt
+
+# Configurer les variables d'environnement
+cp .env.example .env
+# Éditez .env et ajoutez votre clé API
 ```
 
-Run the backend:
+**Obtenir une clé API:**
+
+**Option A - OpenAI:**
+1. Aller sur https://platform.openai.com/api-keys
+2. Créer une clé API
+3. Ajouter dans `.env`: `OPENAI_API_KEY=sk-...`
+
+**Option B - Anthropic Claude:**
+1. Aller sur https://console.anthropic.com/settings/keys
+2. Créer une clé API
+3. Ajouter dans `.env`: `ANTHROPIC_API_KEY=sk-ant-...`
 
 ```bash
-uvicorn main:app --reload
+# Lancer le serveur (choisir une option)
+# Avec OpenAI:
+uvicorn main_openai:app --reload
+
+# Avec Claude:
+uvicorn main_claude:app --reload
+
+# Le backend est disponible sur http://localhost:8000
 ```
 
-Backend will run on:
-
-```
-http://localhost:8000
-```
-
----
-
-### 3️⃣ Frontend Setup (Next.js)
+### 2️⃣ Frontend
 
 ```bash
+# Dans un nouveau terminal
 cd frontend
+
+# Installer les dépendances
 npm install
-npm run dev
+
+# Lancer l'application
+npm start
+
+# L'app est disponible sur http://localhost:3000
 ```
 
-Frontend will run on:
+## 📖 Utilisation
+
+1. **Uploader un PDF**: Allez dans l'onglet "Documents" et uploadez votre PDF
+2. **Attendre le traitement**: Le backend découpe et indexe le document (~quelques secondes)
+3. **Poser des questions**: Retournez à l'onglet "Chat" et posez vos questions!
+
+### Exemple de questions
 
 ```
-http://localhost:3000
+💬 "Quelles sont les étapes pour déposer une réclamation?"
+💬 "Quel est le délai de traitement mentionné?"
+💬 "Résume-moi la section sur les garanties"
 ```
 
----
+## 🎨 Captures d'écran
 
-## 🔐 Environment Variables
+### Chat Interface
+Interface moderne avec support des sources et citations.
 
-Create a `.env.local` file in `frontend/`:
+### Upload Interface
+Drag & drop facile avec barre de progression.
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
+## 🔧 Configuration Avancée
+
+### Ajuster la taille des chunks
+
+Dans `pdf_processor.py`:
+
+```python
+chunks = chunk_text(text, 
+    chunk_size=500,  # Augmenter pour plus de contexte
+    overlap=50       # Augmenter pour éviter de couper les phrases
+)
 ```
 
----
+### Changer le modèle d'embeddings
 
-## 💬 API Endpoint
+Dans `embeddings.py`:
 
-### Ask a question
+```python
+# Modèles disponibles:
+# - 'all-MiniLM-L6-v2' (rapide, 384 dimensions)
+# - 'all-mpnet-base-v2' (plus précis, 768 dimensions)
+# - 'multi-qa-mpnet-base-dot-v1' (optimisé pour Q&A)
 
-**POST** `/ask`
-
-```json
-{
-  "question": "How do I file a claim?"
-}
+self.model = SentenceTransformer('all-mpnet-base-v2')
 ```
 
-Response:
+### Ajuster le nombre de sources
 
-```json
-{
-  "answer": "You can file a claim by filling out the official form..."
-}
+Dans `main.py` (ligne ~100):
+
+```python
+results = vector_store.search(question_embedding, k=5)  # k=5 au lieu de 3
 ```
 
----
+## 📊 API Endpoints
 
-## 📸 Screenshots
+| Endpoint | Méthode | Description |
+|----------|---------|-------------|
+| `/` | GET | Informations de l'API |
+| `/upload-pdf` | POST | Upload un PDF |
+| `/ask` | POST | Poser une question |
+| `/stats` | GET | Statistiques du système |
+| `/docs` | GET | Documentation Swagger |
 
-*(Add screenshots of the chat interface here)*
+### Exemple de requête
 
----
+```bash
+# Upload PDF
+curl -X POST "http://localhost:8000/upload-pdf" \
+  -F "file=@document.pdf"
 
-## 🚧 Future Improvements
-
-* PDF upload from frontend
-* Source citations (page number, paragraph)
-* Streaming responses
-* Authentication
-* Docker support
-* Deployment (Vercel + Render)
-
----
-
-## 🎯 Why This Project Matters
-
-* Demonstrates real-world AI architecture
-* Uses Retrieval-Augmented Generation (RAG)
-* Shows backend + frontend integration
-* Suitable for enterprise use cases
-* Strong portfolio project for GitHub & CV
-
----
-
-## 🧑‍💻 Author
-
-Built with ❤️ by **[HINATA]**
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License.
-
+# Poser une question
+curl -X POST "http://localhost:8000/ask" \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Quelle est la procédure?", "use_ai": true}'
 ```
 
+## 🧪 Tests
+
+```bash
+# Backend
+cd backend
+pytest tests/
+
+# Frontend
+cd frontend
+npm test
+```
+
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues! 
+
+1. Fork le projet
+2. Créer une branche (`git checkout -b feature/AmazingFeature`)
+3. Commit (`git commit -m 'Add AmazingFeature'`)
+4. Push (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
+
+## 📝 Améliorations Futures
+
+- [ ] Support de multiples formats (Word, Excel, TXT)
+- [ ] Historique des conversations
+- [ ] Authentification utilisateur
+- [ ] Base de données PostgreSQL
+- [ ] Support multilingue
+- [ ] Export des conversations en PDF
+- [ ] Mode vocal (speech-to-text)
+
+## 📄 License
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 👨‍💻 Auteur
+
+Créé avec ❤️ pour le challenge de développement
+
+## 🙏 Remerciements
+
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [Sentence Transformers](https://www.sbert.net/)
+- [FAISS](https://github.com/facebookresearch/faiss)
+- [OpenAI](https://openai.com/)
+- [Anthropic](https://anthropic.com/)
+
 ---
 
+⭐ Si ce projet vous plaît, n'hésitez pas à lui donner une étoile!

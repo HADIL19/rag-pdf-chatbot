@@ -1,47 +1,95 @@
-# =========================
 # Python
-# =========================
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-.env
-.venv/
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
 venv/
 ENV/
 env/
+.venv
 
-# =========================
-# FastAPI / Backend
-# =========================
-backend/__pycache__/
-backend/*.sqlite3
-backend/*.db
-backend/*.log
-backend/pdfs/*.tmp
-backend/faiss_index/
-backend/uploads/
+# Environment variables
+.env
+.env.local
+.env.*.local
 
-# =========================
-# Node / Next.js
-# =========================
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# FastAPI / uvicorn
+*.log
+
+# Uploads (ne pas commiter les PDFs uploadés)
+backend/uploads/*.pdf
+backend/uploads/*.txt
+!backend/uploads/.gitkeep
+
+# Node.js / React
 node_modules/
-.next/
-out/
-dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 
-# =========================
-# Environment variables
-# =========================
+# Production build
+build/
+dist/
+
+# Testing
+coverage/
+.nyc_output
+
+# Misc
+.DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# =========================
-# OS / Editor
-# =======================
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# FAISS index files (optionnel, selon si tu veux les commiter)
+*.index
+*.pkl
+
+# Logs
+*.log
+logs/
